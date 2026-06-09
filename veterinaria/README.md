@@ -17,13 +17,13 @@ Clona el repositorio:
 git clone URL_DEL_REPOSITORIO
 ```
 
-Ingresa a la carpeta del proyecto (Dentro de la carpeta de veterinaria):
+Ingresa a la carpeta del proyecto (Dentro de la carpeta llamada "veterinaria"):
 
 ```bash
 cd nombre-del-proyecto
 ```
 
-Construye y levanta los contenedores:
+Construye y levanta los contenedores (Recordar que para levantar los contenedores se debe estar en dentro de la carpeta "veterinaria" ya que dentro de esta carpeta esta todos los archivos y carpetas del proyecto):
 
 ```bash
 docker compose up -d --build
