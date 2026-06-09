@@ -1,6 +1,8 @@
 <?php
 
 ob_start();
+error_reporting(E_ALL & ~E_DEPRECATED);
+ini_set('display_errors', 0);
 
 include('plantillapdf.php');
 include_once('../database/conexion.php');
