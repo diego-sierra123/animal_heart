@@ -33,6 +33,8 @@ docker compose up -d --build
 
 ![Descripción de la imagen](img_mensaje/imagen.png)
 
+<spam style = 'color:#FF746C'> <b> Nota: </b> </spam> En caso de no poder visualizar la imagen, se puede dirigir al README.md que esta dentro de la carpeta de "veterinaria" en donde se podra visualziar la imagen de manera correcta.
+
 ## 🌐 Acceso al sistema
 
 ### Aplicación web
