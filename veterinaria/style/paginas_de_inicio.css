@@ -1,0 +1,1122 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden; 
+}
+
+body{
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
+    overflow-x: hidden; 
+    position: relative;
+    width: 100%;
+}
+
+/* INICIO */
+
+.veterinaria_gmail_redes {
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.veterinaria_gmail_redes:hover{
+    color: #dc3545;
+}
+
+.color:hover {
+    color: #dc3545 !important;
+}
+
+
+/* MODO CLARO */
+
+body.modo-claro {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.modo-claro .titulo{
+    
+    color: #000000;
+}
+
+body.modo-claro .navbar {
+    background-color: #ffffff !important;
+}
+
+body.modo-claro .nav-link {
+    color: #000 !important;
+}
+
+body.modo-claro footer {
+    background-color: #f1f1f1 !important;
+    color: #000 !important;
+}
+
+body.modo-claro .veterinaria_gmail_redes {
+    color: #000000;
+}
+
+body.modo-claro .cuerpo{
+    background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url("../img/fondo.png");
+}
+
+body.modo-claro p{
+    color: #000 !important;
+}
+
+body.modo-claro .section-title{
+    color: #000 !important;
+}
+
+body.modo-claro .cambiarcolor:hover{
+    color: #dc3545 !important;
+}
+
+body.modo-claro .navbar-toggler {
+    background-color: transparent;
+    border-color: #000000;
+}
+
+body.modo-claro .aumentar:hover {
+    color: #dc3545 !important;
+    font-size: 24px !important;
+}
+
+body.modo-claro .navbar-toggler .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* MODO OSCURO */
+
+body.modo-oscuro {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.modo-oscuro .navbar {
+    background-color: #000000 !important;
+}
+
+body.modo-oscuro footer {
+    background-color: #000000 !important;
+}
+
+body.modo-oscuro .veterinaria_gmail_redes {
+    color: #ffffff;
+}
+
+body.modo-oscuro .cuerpo{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("../img/fondo.png");
+}
+
+body.modo-oscuro p{
+    color: #ffffff;
+}
+
+body.modo-oscuro .cambiarcolor:hover{
+    color: #dc3545;
+}
+
+body.modo-oscuro .aumentar:hover {
+    color: #dc3545 !important;
+    font-size: 24px !important;
+}
+
+body.modo-oscuro .navbar-toggler .navbar-toggler-icon {
+    filter: invert(0); 
+}
+
+/* Funciones importantes */
+
+.cardBox {
+    float: left;
+    font-size: 1.2em;
+    margin: 1% 0 0 1%;
+    perspective: 800px;
+    transition: all 0.3s ease 0s;
+    width: 23.7%;
+}
+
+.cardBox:hover .cards {
+    transform: rotateY(180deg);
+}
+
+.cards {
+    background: #222;
+    cursor: default;
+    height: 380px;
+    transform-style: preserve-3d;
+    transition: transform 1.5s ease 0s;
+    width: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-animation: giro 1s 1;
+    animation: giro 1s 1;
+}
+
+.cards img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.cards p {
+    margin-bottom: 1.8em;
+}
+
+.cards .front,
+.cards .back {
+    backface-visibility: hidden;
+    box-sizing: border-box;
+    color: black;
+    display: block;
+    font-size: 1.2em;
+    height: 100%;
+    padding: 0.8em;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+
+.cards .front strong {
+    background: #fff;
+    border-radius: 100%;
+    color: #222;
+    font-size: 1.5em;
+    line-height: 30px;
+    padding: 0 7px 4px 6px;
+}
+
+.cards .back {
+    transform: rotateY(180deg);
+}
+
+.cards .back a {
+    padding: 0.3em 0.5em;
+    background: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 1px;
+    font-size: 0.9em;
+    transition: all 0.2s ease 0s;
+}
+
+.cards .back a:hover {
+    background: #fff;
+    color: #333;
+    text-shadow: 0 0 1px #333;
+}
+
+.back p > b{
+    color: white;
+}
+
+
+.cardBox:nth-child(1) .cards .back {
+    background-size: cover;
+    background-position: center;
+}
+
+.primerafuncion{
+    background-image: linear-gradient(rgba(100, 149, 237, 0.7), rgba(100, 149, 237, 0.9)), url(/img/funciones.png);
+}
+
+.cardBox:nth-child(2) .cards .back {
+    background-size: cover;
+    background-position: center;
+}
+
+.segundafuncion{
+    background-image: linear-gradient(rgba(255, 165, 0, 0.7), rgba(255, 165, 0, 0.9)), url(/img/funciones.png);
+}
+
+.cardBox:nth-child(3) .cards .back {
+    background-size: cover;
+    background-position: center;
+}
+
+.tercerafuncion{
+    background-image: linear-gradient(rgba(0, 128, 0, 0.7), rgba(0, 128, 0, 0.9)), url(/img/funciones.png);
+}
+
+.cardBox:nth-child(2) .cards {
+    -webkit-animation: giro 1.5s 1;
+    animation: giro 1.5s 1;
+}
+
+.cardBox:nth-child(3) .cards {
+    -webkit-animation: giro 2s 1;
+    animation: giro 2s 1;
+}
+
+@-webkit-keyframes giro {
+    from {
+        transform: rotateY(180deg);
+    }
+    to {
+        transform: rotateY(0deg);
+    }
+}
+
+@keyframes giro {
+    from {
+        transform: rotateY(180deg);
+    }
+    to {
+        transform: rotateY(0deg);
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .cardBox {
+        margin-left: 2.8%;
+        margin-top: 3%;
+        width: 46%;
+    }
+
+    .cards {
+        height: 285px;
+    }
+
+    .cardBox:last-child {
+        margin-bottom: 3%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .cardBox {
+        width: 94.5%;
+    }
+
+    .cards {
+        height: 260px;
+    }
+}
+
+/* Misión y Visión */
+
+.vision{
+    border: 2px solid gray;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #b6b6b6;
+}
+
+.vision:hover{
+    border: 4px solid gray;
+    cursor: default;
+}
+
+.vision a{
+    color: white;
+    padding: 10px;
+    border-radius: 100%;
+    border: 2px solid white;
+    margin: 10px;
+}
+
+.vision a:hover{
+    font-size: 24px;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+}
+
+.mision{
+    border: 2px solid gray;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #b6b6b6;
+}
+
+.mision a{
+    color: white;
+    padding: 10px;
+    border-radius: 100%;
+    border: 2px solid white;
+    margin: 10px;
+}
+
+.mision a:hover{
+    font-size: 24px;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+}
+
+.mision:hover{
+    border: 4px solid gray;
+    cursor: default;
+}
+
+/* Consejos de cuidados para animales */
+
+.section-title {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.section-description {
+    font-size: 16px;
+}
+
+.card-custom {
+    border-radius: 26px;
+    border: 2px solid gray;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #b6b6b6;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.card-custom:hover {
+    border: 4px solid gray;
+    cursor: default;
+}
+
+.icon {
+    font-size: 3rem;
+    color: white;
+}
+
+.card-text b{
+    color: white;
+}
+
+/*SERVICIOS*/
+
+.project-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.project-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 20px 30px -5px rgba(174, 173, 173, 0.4) !important;
+    border-color: gray !important;
+    cursor: default;
+}
+
+.project-card:hover .img-area img {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.img-area {
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.img-area img {
+    transition: transform 0.3s ease;
+}
+
+/*Importancias y recomendaciones de estos servicios*/
+
+.about-img {
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.about-img img {
+    transition: transform 0.3s ease;
+    display: block;
+    width: 100%;
+    border: 4px solid gray;
+}
+
+.about-img:hover {
+    box-shadow: 0 20px 30px -5px rgba(174, 173, 173, 0.4) !important;
+}
+
+.about-img:hover img {
+    transform: scale(1.05);
+}
+
+/*UBICACIÓN*/
+
+.email-link {
+    text-decoration: none;
+}
+
+.email-icon {
+    margin-right: 7px;
+}
+
+.email-link:hover {
+    text-decoration: none;
+    color: #dc3545;
+}
+
+.modo-nocturno .email-link:hover {
+    color: #dc3545;
+}
+
+/*CATALOGO*/
+
+/* ESTILOS PARA EL CATALOGO DE ARTÍCULOS */
+.container-main {
+    min-height: calc(100vh - 100px);
+    padding-bottom: 5em;
+}
+
+/* Para los alerts de añadir/remover */
+header,
+.alert {
+    z-index: 100;
+}
+
+/* Efecto hover para la descripción de las tarjetas */
+.description {
+    height: 50px;
+    overflow: hidden;
+    transition: height .3s ease-in .3s;
+}
+.description:hover {
+    height: 200px;
+}
+
+/* Estilos para el contador del carrito */
+.count-product {
+    margin-left: 5px;
+}
+
+/* Estilos para el área del carrito */
+.carrito {
+    min-height: 80vh;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Estilos para la tabla del carrito */
+.table__productos {
+    display: flex;
+    align-items: center;
+}
+.table__productos > img {
+    width: 8rem; /* Un poco más pequeño para que no desborde */
+    height: auto;
+    object-fit: contain;
+    border-radius: 6px;
+    border: 4px solid gray;
+    margin-right: 20px;
+}
+.table__cantidad > input {
+    width: 60px;
+    border: none;
+    outline: 0;
+    font-size: 16px;
+    font-weight: 700;
+    margin-right: 30px;
+    margin-bottom: 14px;
+    text-align: center;
+    background-color: #f0f0f0; /* Fondo para el input */
+    border-radius: 4px;
+    padding: 4px;
+}
+
+/* Clase para ocultar elementos */
+.hide {
+    display: none !important;
+}
+.remove {
+    display: none !important;
+}
+
+/* Animación para los alerts */
+.alert {
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+.alert.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Estilos para las pestañas de navegación */
+.nav-pills .nav-link.modificar {
+    color: white;
+    background-color: transparent;
+    border: 1px solid #6c757d;
+    margin: 0 5px;
+    transition: all 0.3s ease;
+}
+.nav-pills .nav-link.modificar:hover {
+    background-color: #6c757d;
+    color: white !important;
+}
+.nav-pills .nav-link.modificar.active {
+    background-color: #dc3545 !important; /* Rojo de Bootstrap */
+    border-color: #dc3545 !important;
+    color: white !important;
+}
+.nav-pills .nav-link.modificar.active i,
+.nav-pills .nav-link.modificar.active span,
+.nav-pills .nav-link.modificar.active p {
+    color: white !important;
+}
+
+/* Estilos para los botones de las tarjetas */
+.btn-secondary {
+    border: 4px solid gray;
+    border-radius: 7px;
+    transition: all 0.3s ease;
+}
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+}
+.btn-light.button {
+    border: 4px solid gray;
+    border-radius: 7px;
+    background-color: #f8f9fa;
+    color: #212529;
+    transition: all 0.3s ease;
+}
+.btn-light.button:hover {
+    background-color: #e2e6ea;
+    border-color: #adb5bd;
+}
+
+/* Estilos para las tarjetas de productos */
+.card.borde {
+    border: 4px solid gray;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card.borde:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3) !important;
+}
+
+/* Contenedor de imágenes de tarjetas */
+.card [style*="height: 172px; overflow: hidden;"] {
+    border-bottom: 3px solid gray;
+}
+
+/* Estilos para los collapse de filtros */
+.collapse.show + .row,
+.collapse.show {
+    display: flex !important;
+    flex-wrap: wrap;
+}
+
+/* Ajustes para los títulos dentro de los collapse */
+.collapse h2.unico {
+    width: 100%;
+    text-align: left;
+    padding-left: 15px;
+}
+
+/* Estilos para el botón de borrar del carrito */
+.delete.btn-danger {
+    padding: 0.375rem 0.75rem;
+    border-radius: 4px;
+}
+.delete.btn-danger i {
+    pointer-events: none;
+}
+
+/* Estilos para los items del carrito */
+.ItemCarrito td {
+    vertical-align: middle;
+}
+
+/* Estilos para el input de cantidad en el carrito */
+.input__elemento {
+    width: 48px;
+    border: 2px solid gray;
+    border-radius: 4px;
+    padding: 4px;
+    text-align: center;
+    background-color: white;
+    color: black;
+}
+
+/* Modo oscuro: ajustes para el input del carrito */
+body.modo-oscuro .input__elemento {
+    background-color: #333;
+    color: white;
+    border-color: #666;
+}
+
+
+
+/* Estilos para la línea divisoria blanca */
+hr[style*="border-color: white;"] {
+    border-width: 2px;
+    opacity: 0.8;
+}
+
+/* Estilos responsivos para las tablas en móviles */
+@media (max-width: 768px) {
+    .table__productos {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .table__productos > img {
+        width: 100%;
+        max-width: 150px;
+        margin-bottom: 10px;
+    }
+    .table__cantidad > input {
+        width: 50px;
+    }
+    .carrito .row.mx-4 {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .carrito .col.my-2 {
+        justify-content: center !important;
+    }
+}
+
+/* Ajustes para los botones de filtro */
+[data-bs-toggle="collapse"].btn {
+    margin: 5px 0;
+    width: 100%;
+    max-width: 250px;
+}
+
+/* Estilos para los modales */
+.modal-content {
+    background-color: #f8f9fa;
+    border: 4px solid gray;
+    border-radius: 15px;
+}
+body.modo-oscuro .modal-content {
+    background-color: #2d2d2d;
+    color: white;
+}
+body.modo-oscuro .modal-header,
+body.modo-oscuro .modal-footer {
+    border-color: #495057;
+}
+body.modo-oscuro .modal-title {
+    color: white;
+}
+body.modo-oscuro .modal-body p {
+    color: #e0e0e0 !important;
+}
+
+
+
+
+/*REGISTRARSE*/
+
+/* Efecto hover para los botones */
+.btn-hover {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.btn-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.btn-secondary.btn-hover:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.btn-success.btn-hover:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+/* Clase project-card para el efecto hover de la tarjeta completa */
+.project-card {
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4) !important;
+}
+
+/* Ajustes para la imagen */
+.col-xl-6.p-0 {
+    padding: 0 !important;
+    height: 100%;
+    min-height: 800px;
+}
+
+/* Scroll para el formulario */
+.card-body {
+    max-height: 800px;
+    overflow-y: auto;
+}
+
+/* Estilo para el scroll */
+.card-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.card-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.card-body::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.card-body::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Estilo para los selects */
+.form-select {
+    padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+}
+
+/* Ajustes para los labels de los selects */
+.form-label {
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+/*INICIAR SESIÓN*/
+
+.form-floating>label {
+        padding-left: 1.75rem;
+    }
+
+    .form-floating>.form-control {
+        padding-left: 1.75rem;
+    }
+
+    .form-floating>.form-control:focus {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+
+    #olvide-contraseña:hover,
+    #volver-login:hover {
+        transform: translateX(5px);
+        text-decoration: underline !important;
+    }
+
+    /* Mejoras para los botones - TAMAÑO NORMAL */
+    .btn {
+        transition: all 0.3s ease;
+        padding: 0.375rem 0.75rem;  /* Tamaño estándar de Bootstrap */
+        font-size: 1rem;             /* Tamaño de fuente normal */
+        border-radius: 0.25rem;       /* Bordes normales */
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: 2px solid #28a745;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: 2px solid #6c757d;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+    }
+
+    /* Mejoras responsivas */
+    @media (max-width: 991.98px) {
+        .card-body {
+            padding: 2rem !important;
+        }
+    }
+
+    /* Animación para los iconos */
+    .fa-paw {
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    /* Estilo para el borde de la tarjeta */
+    .project-card {
+        transition: all 0.3s ease;
+    }
+
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
+    }
+
+
+    /* Agrega esto a tu CSS existente */
+
+/* Para el fondo de la tarjeta de nota - ajuste según el modo */
+body.modo-claro .fondo-pantalla {
+    background-color: #e9ecef !important; /* Un gris más claro para modo claro */
+    border-color: #adb5bd !important;
+}
+
+body.modo-oscuro .fondo-pantalla {
+    background-color: #2d2d2d !important; /* Un gris oscuro para modo oscuro */
+    border-color: #495057 !important;
+}
+
+/* Para el texto de la nota - color automático */
+.texto-nota {
+    color: inherit; /* Hereda el color del body según el modo */
+    font-size: 18px;
+}
+
+/* Para los spans de colores - mantenerlos visibles en ambos modos */
+.texto-nota .text-success {
+    color: #28a745 !important; /* Mantener verde en ambos modos */
+}
+
+.texto-nota .text-primary {
+    color: #007bff !important; /* Mantener azul en ambos modos */
+}
+
+.container-main {
+  min-height: calc(100vh - 100px);
+  padding-bottom: 5em;
+}
+
+
+header,
+.alert {
+  z-index: 100;
+}
+
+.description {
+  height: 50px;
+  overflow: hidden;
+  transition: height .3s ease-in .3s;
+}
+
+.description:hover {
+  height: 200px;
+}
+
+
+.carrito {
+  min-height: 80vh;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.table__productos {
+  display: flex;
+}
+
+.table__productos>img {
+  width: 12rem;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 4px solid gray;
+  margin-right: 20px;
+}
+
+.table__cantidad>input {
+  width: 40px;
+  border: none;
+  outline: 0;
+  font-size: 16px;
+  font-weight: 700;
+  margin-right: 30px;
+  margin-bottom: 14px;
+}
+
+.hide,
+.remove {
+  display: none;
+}
+
+
+
+.fade {
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.modificar{
+  color:white !important;
+}
+
+
+
+.nav-link.active {
+  background-color: gray !important;
+}
+
+
+/* Estilos para el texto de las notas */
+.text-nota {
+    color: #212529; /* Color oscuro por defecto */
+    font-size: 18px;
+}
+
+.modo-oscuro .text-nota {
+    color: #f8f9fa; /* Color claro para modo oscuro */
+}
+
+/* Mantener el texto rojo siempre visible */
+.text-danger {
+    color: #dc3545 !important;
+}
+
+/* ===== VERSIÓN ALTERNATIVA: TARJETAS EN VEZ DE TABLA PARA MÓVILES ===== */
+@media screen and (max-width: 768px) {
+    /* Opción: Convertir tabla en tarjetas */
+
+    .ItemCarrito th[scope="row"] {
+        text-align: center !important;
+        background-color: #dc3545;
+        color: white;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 10px auto; /* Esto lo centra */
+    }
+    
+    .table-responsive {
+        overflow-x: visible !important;
+    }
+    
+    .table {
+        min-width: 100% !important;
+    }
+    
+    .table thead {
+        display: none; /* Ocultar cabecera en móviles */
+    }
+    
+    .table tbody tr {
+        display: block;
+        margin-bottom: 20px;
+        border: 2px solid gray;
+        border-radius: 10px;
+        padding: 10px;
+        background-color: #f8f9fa;
+    }
+    
+    body.modo-oscuro .table tbody tr {
+        background-color: #2d2d2d;
+    }
+    
+    .ItemCarrito td {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 8px 10px;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .ItemCarrito td:last-child {
+        border-bottom: none;
+    }
+    
+    /* Etiquetas para cada campo */
+    .ItemCarrito td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        width: 100px;
+        display: inline-block;
+        color: inherit;
+    }
+    
+    /* Ajustes específicos */
+    .table__productos {
+        display: flex !important;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .table__productos:before {
+        content: "Producto:";
+    }
+    
+    .table__productos > img {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    
+    .table__price:before {
+        content: "Precio:";
+    }
+    
+    .table__cantidad:before {
+        content: "Cantidad:";
+    }
+    
+    
+    .ItemCarrito td:last-child:before {
+        content: "Acción:";
+    }
+    
+    /* Botón eliminar centrado */
+    .delete.btn-danger {
+        display: inline-block;
+        margin-left: 100px;
+    }
+
+    .table__totalidad:before {
+    content: "Total: ";
+    }
+    
+    .table__totalidad p {
+        display: inline !important;
+        margin-left: 5px;
+    }
+    
+}
+

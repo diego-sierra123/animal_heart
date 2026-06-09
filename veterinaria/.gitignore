@@ -1,0 +1,19 @@
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Configuración de VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Variables de entorno
+.env
+
+# Datos de Docker (si existen)
+docker-data/
+mysql-data/
+
+# Dependencias Composer (si usas Composer)
+vendor/
