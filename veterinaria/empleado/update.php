@@ -226,9 +226,9 @@ if ($_SESSION["id_rol"] == 2) {
                             });
                             </script>';
                         } else {
-                            // ========== VALIDACIÓN DE DUPLICADOS (ignorando valores genéricos) ==========
+                            // ========== VALIDACIÓN DE DUPLICADOS (CLIENTE + EMPLEADO) ==========
+                            // Opcional: ignorar valores genéricos (si usas 'N/A', etc.)
                             $ignorar_valores = ['N/A', 'NA', 'n/a', 'no tiene', 'sin dato', '0', '', 'ninguno', 'NULL', 'null', '--'];
-
                             function esGenerico($valor, $ignorar_valores) {
                                 $valor_limpio = trim($valor);
                                 return in_array($valor_limpio, $ignorar_valores) || empty($valor_limpio);
@@ -237,23 +237,47 @@ if ($_SESSION["id_rol"] == 2) {
                             $check_duplicados = false;
                             $mensaje_error = '';
 
-                            // Verificar documento (si no es genérico)
-                            if (!esGenerico($ndoc, $ignorar_valores)) {
-                                $checkQuery = "SELECT id_empleado FROM empleado WHERE n_documento = '$ndoc' AND id_empleado != '$idPac'";
-                                $checkResult = mysqli_query($conexion, $checkQuery);
-                                if (mysqli_num_rows($checkResult) > 0) {
-                                    $check_duplicados = true;
-                                    $mensaje_error = "El número de documento ya está registrado en otro empleado.";
+                            // Construir la consulta de verificación: 
+                            // - Buscar en clientes (sin excluir ninguno, porque son registros distintos)
+                            // - Buscar en empleados, pero excluyendo el propio ID a actualizar
+                            // Se busca tanto por documento como por correo (OR)
+                            $checkQuery = "SELECT id_cliente FROM cliente WHERE (n_documento = '$ndoc' OR correo = '$correo')";
+                            // Si el documento o correo son genéricos, no los verificamos (opcional)
+                            if (!esGenerico($ndoc, $ignorar_valores) || !esGenerico($correo, $ignorar_valores)) {
+                                $checkQuery .= " UNION SELECT id_empleado FROM empleado WHERE (n_documento = '$ndoc' OR correo = '$correo') AND id_empleado != '$idPac'";
+                            } else {
+                                // Si ambos son genéricos, solo verificamos en empleados (excluyendo self) y en clientes (pero como son genéricos, no tiene sentido)
+                                // En realidad, si son genéricos, no deberíamos bloquear, así que podemos saltar la verificación.
+                                // Para simplificar, si ambos son genéricos, no hacemos verificación.
+                                // Pero para ser estrictos, si uno es genérico y el otro no, solo verificamos el que no lo es.
+                                // Mejor hacemos una verificación condicional:
+                                $checkQuery = "";
+                                if (!esGenerico($ndoc, $ignorar_valores) && !esGenerico($correo, $ignorar_valores)) {
+                                    // Ambos no genéricos: verificar ambos
+                                    $checkQuery = "SELECT id_cliente FROM cliente WHERE (n_documento = '$ndoc' OR correo = '$correo')
+                                                   UNION 
+                                                   SELECT id_empleado FROM empleado WHERE (n_documento = '$ndoc' OR correo = '$correo') AND id_empleado != '$idPac'";
+                                } elseif (!esGenerico($ndoc, $ignorar_valores)) {
+                                    // Solo documento no genérico
+                                    $checkQuery = "SELECT id_cliente FROM cliente WHERE n_documento = '$ndoc'
+                                                   UNION 
+                                                   SELECT id_empleado FROM empleado WHERE n_documento = '$ndoc' AND id_empleado != '$idPac'";
+                                } elseif (!esGenerico($correo, $ignorar_valores)) {
+                                    // Solo correo no genérico
+                                    $checkQuery = "SELECT id_cliente FROM cliente WHERE correo = '$correo'
+                                                   UNION 
+                                                   SELECT id_empleado FROM empleado WHERE correo = '$correo' AND id_empleado != '$idPac'";
+                                } else {
+                                    // Ambos genéricos: no hacer verificación
+                                    $checkQuery = "";
                                 }
                             }
 
-                            // Verificar correo (si no es genérico y no hay duplicado previo)
-                            if (!$check_duplicados && !esGenerico($correo, $ignorar_valores)) {
-                                $checkQuery = "SELECT id_empleado FROM empleado WHERE correo = '$correo' AND id_empleado != '$idPac'";
+                            if (!empty($checkQuery)) {
                                 $checkResult = mysqli_query($conexion, $checkQuery);
                                 if (mysqli_num_rows($checkResult) > 0) {
                                     $check_duplicados = true;
-                                    $mensaje_error = "El correo ya está registrado en otro empleado.";
+                                    $mensaje_error = "El número de documento o correo ya está registrado en otro empleado o cliente.";
                                 }
                             }
 
@@ -270,7 +294,7 @@ if ($_SESSION["id_rol"] == 2) {
                                 });
                                 </script>';
                             } else {
-                                // No hay duplicados relevantes, proceder con la actualización
+                                // No hay duplicados, proceder con la actualización
                                 $sql = "UPDATE empleado SET 
                                         nombre = '$nom',
                                         telefono = '$tel',
