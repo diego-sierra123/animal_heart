@@ -74,7 +74,6 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
                                             $mesNumero = $meses[$mesTexto];
 
                                             $consulta = "SELECT 
-                                                            MONTH(f.fecha) AS mes,
                                                             SUM(df.valor_total - (a.costo_conseguido * df.cantidad)) AS ganancias
                                                         FROM factura f
                                                         INNER JOIN detalle_factura df ON f.id_factura = df.id_factura
@@ -102,10 +101,10 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
                                                 echo '<tr><td colspan="2" class="text-center align-middle text-danger">Error en la consulta</td></tr>';
                                             }
                                         } else {
-                                            echo '<tr><td colspan="2" class="text-center align-middle">Formato incorrecto o mes no válido. Ejemplo: Enero 2023</td></tr>';
+                                            echo '<tr><td colspan="2" class="text-center align-middle">Formato incorrecto o mes no válido. Ejemplo: Enero 2026</td></tr>';
                                         }
                                     } else {
-                                        echo '<tr><td colspan="2" class="text-center align-middle">Formato incorrecto. Use: Mes Año (ejemplo: Enero 2023)</td></tr>';
+                                        echo '<tr><td colspan="2" class="text-center align-middle">Formato incorrecto. Use: Mes Año (ejemplo: Enero 2026)</td></tr>';
                                     }
                                 }
                                 ?>

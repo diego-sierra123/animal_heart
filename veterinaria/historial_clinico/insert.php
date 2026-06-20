@@ -107,12 +107,16 @@ $id_clientee = intval($_GET['id_clientee'] ?? 0);
                                 <textarea name="txtinstrucciones" placeholder="Ingrese las instrucciones" class="form-control" style="background-color: rgba(255, 255, 255, 0.8); color: #000;" rows="3"></textarea>
                             </div>
                             <div class="col-md-4">
-                                <label for="" class="form-label" style="font-size: 20px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); color: #fff;">Fecha Proxima:</label>
-                                <input type="date" name="txtfechapro" class="form-control" style="background-color: rgba(255, 255, 255, 0.8); color: #000;" min="<?php echo $nueva_fecha; ?>">
+                                <label for="" class="form-label" style="font-size: 20px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); color: #fff;">Peso (kg):</label>
+                                <input type="number" step="0.01" min="0" name="txtpeso" placeholder="Ingrese el peso" class="form-control" style="background-color: rgba(255, 255, 255, 0.8); color: #000;" required>
                             </div>
                         </div>
 
                         <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="" class="form-label" style="font-size: 20px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); color: #fff;">Fecha Proxima:</label>
+                                <input type="date" name="txtfechapro" class="form-control" style="background-color: rgba(255, 255, 255, 0.8); color: #000;" min="<?php echo $nueva_fecha; ?>">
+                            </div>
                             <div class="col-md-12">
                                 <label for="" class="form-label" style="font-size: 20px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); color: #fff;">Tratamiento:</label>
                                 <select name="txttratamiento" class="form-control" style="background-color: rgba(255, 255, 255, 0.8); color: #000;">
@@ -217,6 +221,7 @@ $id_clientee = intval($_GET['id_clientee'] ?? 0);
                             $cli = $_POST['txtcliente'];
                             $mas = $_POST['txtmascota'];
                             $serv = $_POST['txtservicio'];
+                            $pes = mysqli_real_escape_string($conexion, $_POST["txtpeso"]);
                             $dia = mysqli_real_escape_string($conexion, $_POST["txtdiagnostico"]);
                             $ins = mysqli_real_escape_string($conexion, $_POST["txtinstrucciones"]);
                             $fecpro = !empty($_POST["txtfechapro"]) ? mysqli_real_escape_string($conexion, $_POST["txtfechapro"]) : null;
@@ -230,8 +235,8 @@ $id_clientee = intval($_GET['id_clientee'] ?? 0);
                             $resultadoProveedor = mysqli_query($conexion, $consultaProveedor);
 
                             if (mysqli_num_rows($resultadoProveedor) > 0 && !empty($mas) && !empty($fec) && !empty($pul) && !empty($car) && !empty($emp)) {
-                                $sql = "INSERT INTO historial_clinico (id_cliente, id_mascota, fecha_visita, diagnostico, id_tratamiento, instrucciones, fecha_proxima_cita, pulso, cardio, id_vacuna, fecha_vacuna, id_desparasitante, fecha_desparasitante, id_empleado, id_nom_servicio) 
-                                        VALUES ('$cli', '$mas', '$fec', '$dia', '$tra', '$ins', " . ($fecpro ? "'$fecpro'" : "NULL") . ", '$pul', '$car', '$vac', " . ($fecvac ? "'$fecvac'" : "NULL") . ", '$des', " . ($fecdes ? "'$fecdes'" : "NULL") . ", '$emp', '$serv' )";
+                                $sql = "INSERT INTO historial_clinico (id_cliente, id_mascota, fecha_visita, diagnostico, id_tratamiento, instrucciones, fecha_proxima_cita, pulso, cardio, id_vacuna, fecha_vacuna, id_desparasitante, fecha_desparasitante, id_empleado, id_nom_servicio, peso) 
+                                        VALUES ('$cli', '$mas', '$fec', '$dia', '$tra', '$ins', " . ($fecpro ? "'$fecpro'" : "NULL") . ", '$pul', '$car', '$vac', " . ($fecvac ? "'$fecvac'" : "NULL") . ", '$des', " . ($fecdes ? "'$fecdes'" : "NULL") . ", '$emp', '$serv', '$pes')";
                                 $result = mysqli_query($conexion, $sql);
 
                                 if ($result) {

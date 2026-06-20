@@ -114,7 +114,7 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
                                     $valor = "$" . number_format($fila['valor'], 0, ',', '.');
                                     $costo = "$" . number_format($fila['costo_conseguido'], 0, ',', '.');
                                     $stock = ($idpac >= 190 && $idpac <= 192) || ($idpac >= 210 && $idpac <= 221) ? "No stock" : $fila['stock'];
-                                    $fecha = date('d/m/y', strtotime($fila['fecha_vencimiento']));
+                                    $fecha = !empty($fila['fecha_vencimiento']) ? date('d/m/y', strtotime($fila['fecha_vencimiento'])) : '';
                                     $foto = $fila['foto'];
                                     $prove = substr($fila['proveedor'], 0, 10) . (strlen($fila['proveedor']) > 10 ? '...' : '');
                                     $tipo = substr($fila['tipo'], 0, 8) . (strlen($fila['tipo']) > 8 ? '...' : '');

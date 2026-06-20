@@ -19,9 +19,9 @@ $nueva_fecha = date('Y-m-d', strtotime($hora_actual . ' - ' . $horas_a_retrasar 
 $animales = $_GET['animal'];
 $historial = $_GET['historia'];
 
-$pdf->SetFont('Arial', 'B', 16); 
-$pdf->Cell(0, 10, utf8_decode('HISTORIA CLINICA'), 0, 1, 'C'); 
-$pdf->Ln(10); 
+$pdf->SetFont('Arial', 'B', 16);
+$pdf->Cell(0, 10, utf8_decode('HISTORIA CLINICA'), 0, 1, 'C');
+$pdf->Ln(10);
 
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(40, 10, utf8_decode('Fecha de hoy: ') . $nueva_fecha, 0, 0, 'L');
@@ -29,7 +29,7 @@ $pdf->Ln(20);
 
 $consul = mysqli_query($conexion, " SELECT h.id_historial_clinico, c.id_cliente, c.nombres AS cliente, m.id_mascota, m.nombre AS mascota, 
 h.fecha_visita, h.diagnostico, t.id_tratamiento, t.medicamentos, t.fecha, t.observaciones , h.instrucciones, h.fecha_proxima_cita, 
-h.pulso, h.cardio, v.id_vacuna, v.nombre AS vacuna, h.fecha_vacuna, d.id_desparasitante, 
+h.pulso, h.cardio, h.peso,  v.id_vacuna, v.nombre AS vacuna, h.fecha_vacuna, d.id_desparasitante, 
 d.nombre AS desparasitante, h.fecha_desparasitante, e.id_empleado, e.nombre AS empleado 
 FROM historial_clinico h 
 LEFT JOIN cliente c ON h.id_cliente = c.id_cliente
@@ -53,15 +53,17 @@ while ($ejecutando = mysqli_fetch_array($consul)) {
     $pdf->Cell(47, 10, 'FECHA VISITA:', 1, 0, 'L');
     $pdf->Cell(48, 10, empty($ejecutando['fecha_visita']) ? 'N/A' : utf8_decode($ejecutando['fecha_visita']), 1, 0, 'L');
     $pdf->Cell(47, 10, 'PULSO:', 1, 0, 'L');
-    $pdf->Cell(48, 10, empty($ejecutando['pulso']) ? 'N/A' : $ejecutando['pulso'] .' ppm', 1, 1, 'L');
+    $pdf->Cell(48, 10, empty($ejecutando['pulso']) ? 'N/A' : $ejecutando['pulso'] . ' ppm', 1, 1, 'L');
 
     $pdf->Cell(47, 10, 'PROXIMA VISITA:', 1, 0, 'L');
     $pdf->Cell(48, 10, empty($ejecutando['fecha_proxima_cita']) ? 'N/A' : utf8_decode($ejecutando['fecha_proxima_cita']), 1, 0, 'L');
     $pdf->Cell(47, 10, 'CARDIO:', 1, 0, 'L');
-    $pdf->Cell(48, 10, empty($ejecutando['cardio']) ? 'N/A' : $ejecutando['cardio'] .' lpm', 1, 1, 'L');
+    $pdf->Cell(48, 10, empty($ejecutando['cardio']) ? 'N/A' : $ejecutando['cardio'] . ' lpm', 1, 1, 'L');
 
     $pdf->Cell(47, 10, 'ATENDIDO POR:', 1, 0, 'L');
-    $pdf->Cell(143, 10, empty($ejecutando['empleado']) ? 'N/A' : utf8_decode($ejecutando['empleado']), 1, 1, 'L');
+    $pdf->Cell(48, 10, empty($ejecutando['empleado']) ? 'N/A' : utf8_decode($ejecutando['empleado']), 1, 0, 'L');
+    $pdf->Cell(47, 10, 'PESO:', 1, 0, 'L');
+    $pdf->Cell(48, 10, empty($ejecutando['peso']) ? 'N/A' : $ejecutando['peso'] . ' kg', 1, 1, 'L');
 
     $pdf->Cell(47, 10, 'DIAGNOSTICO:', 1, 0, 'L');
     $pdf->Cell(143, 10, empty($ejecutando['diagnostico']) ? 'N/A' : utf8_decode($ejecutando['diagnostico']), 1, 1, 'L');
@@ -70,10 +72,10 @@ while ($ejecutando = mysqli_fetch_array($consul)) {
     $pdf->Cell(143, 10, empty($ejecutando['instrucciones']) ? 'N/A' : utf8_decode($ejecutando['instrucciones']), 1, 1, 'L');
 
     // VACUNAS
-    $pdf->SetFont('Arial', 'B', 14); 
+    $pdf->SetFont('Arial', 'B', 14);
     $pdf->Cell(0, 10, 'VACUNAS', 1, 1, 'C');
 
-    $pdf->SetFont('Arial', '', 10); 
+    $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(47, 10, 'VACUNA:', 1, 0, 'L');
     $pdf->Cell(0, 10, empty($ejecutando['vacuna']) ? 'N/A' : utf8_decode($ejecutando['vacuna']), 1, 1, 'L');
 
@@ -81,10 +83,10 @@ while ($ejecutando = mysqli_fetch_array($consul)) {
     $pdf->Cell(0, 10, empty($ejecutando['fecha_vacuna']) ? 'N/A' : utf8_decode($ejecutando['fecha_vacuna']), 1, 1, 'L');
 
     // DESPARASITANTES
-    $pdf->SetFont('Arial', 'B', 14); 
+    $pdf->SetFont('Arial', 'B', 14);
     $pdf->Cell(0, 10, 'DESPARASITANTES', 1, 1, 'C');
 
-    $pdf->SetFont('Arial', '', 10); 
+    $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(47, 10, 'DESPARASITANTE:', 1, 0, 'L');
     $pdf->Cell(0, 10, empty($ejecutando['desparasitante']) ? 'N/A' : utf8_decode($ejecutando['desparasitante']), 1, 1, 'L');
 
@@ -92,10 +94,10 @@ while ($ejecutando = mysqli_fetch_array($consul)) {
     $pdf->Cell(0, 10, empty($ejecutando['fecha_desparasitante']) ? 'N/A' : utf8_decode($ejecutando['fecha_desparasitante']), 1, 1, 'L');
 
     // TRATAMIENTOS
-    $pdf->SetFont('Arial', 'B', 14); 
+    $pdf->SetFont('Arial', 'B', 14);
     $pdf->Cell(0, 10, 'TRATAMIENTOS', 1, 1, 'C');
 
-    $pdf->SetFont('Arial', '', 10); 
+    $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(47, 20, 'MEDICAMENTOS:', 1, 0, 'L');
     $pdf->MultiCell(0, 20, empty($ejecutando['medicamentos']) ? 'N/A' : utf8_decode($ejecutando['medicamentos']), 1, 'L');
 

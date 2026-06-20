@@ -31,6 +31,7 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
             $fecpro = '';
             $pul = '';
             $car = '';
+            $peso = '';
             $vac = '';
             $fecvac = '';
             $des = '';
@@ -47,7 +48,7 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
 
                 $consulta = "SELECT * FROM historial_clinico WHERE id_historial_clinico = '$id_historia'";
                 $ejecutar = mysqli_query($conexion, $consulta);
-                
+
                 if ($ejecutar && mysqli_num_rows($ejecutar) > 0) {
                     $fila = mysqli_fetch_assoc($ejecutar);
                     $idpac = $fila['id_historial_clinico'];
@@ -60,6 +61,7 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
                     $fecpro = $fila['fecha_proxima_cita'];
                     $pul = $fila['pulso'];
                     $car = $fila['cardio'];
+                    $peso = $fila['peso'];
                     $vac = $fila['id_vacuna'];
                     $fecvac = $fila['fecha_vacuna'];
                     $des = $fila['id_desparasitante'];
@@ -68,7 +70,7 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
                     $serv = $fila['id_nom_servicio'];
                 }
             }
-            
+
             // Obtener nombres para mostrar
             $nombre_mascota = '';
             $nombre_cliente = '';
@@ -123,6 +125,10 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
 
                         <div class="row mb-3">
                             <div class="col-md-4">
+                                <label class="form-label" style="font-size: 20px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); color: #fff;">Peso (kg):</label>
+                                <input type="number" step="0.01" min="0" name="txtpeso" value="<?php echo $peso; ?>" class="form-control" style="background-color: rgba(255, 255, 255, 0.8); color: #000;" required>
+                            </div>
+                            <div class="col-md-4">
                                 <label class="form-label" style="font-size: 20px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); color: #fff;">Pulso:</label>
                                 <input type="number" min="0" name="txtpulso" value="<?php echo $pul; ?>" class="form-control" style="background-color: rgba(255, 255, 255, 0.8); color: #000;" required>
                             </div>
@@ -130,7 +136,11 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
                                 <label class="form-label" style="font-size: 20px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); color: #fff;">Cardio:</label>
                                 <input type="number" min="0" name="txtcardio" value="<?php echo $car; ?>" class="form-control" style="background-color: rgba(255, 255, 255, 0.8); color: #000;" required>
                             </div>
-                            <div class="col-md-4">
+
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-12">
                                 <label class="form-label" style="font-size: 20px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); color: #fff;">Atendido por:</label>
                                 <select name="txtempleado" class="form-control" style="background-color: rgba(255, 255, 255, 0.8); color: #000;" required>
                                     <?php
@@ -169,12 +179,12 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
                                     $selected_na = ($tra == 1) ? 'selected' : '';
 
                                     if ($mas != 1) {
-                                    echo "<option value='1' $selected_na>N/A</option>";
+                                        echo "<option value='1' $selected_na>N/A</option>";
                                     }
 
                                     $consulta_tratamientos = "SELECT id_tratamiento, medicamentos AS tratamiento FROM tratamiento WHERE id_mascota = '$mas'";
                                     $ejecutar_tratamientos = mysqli_query($conexion, $consulta_tratamientos);
-                                    if(mysqli_num_rows($ejecutar_tratamientos) > 0) {
+                                    if (mysqli_num_rows($ejecutar_tratamientos) > 0) {
                                         while ($respuesta = mysqli_fetch_assoc($ejecutar_tratamientos)) {
                                             $selected = ($respuesta['id_tratamiento'] == $tra) ? 'selected' : '';
                                             echo "<option value='" . $respuesta['id_tratamiento'] . "' $selected>" . htmlspecialchars($respuesta['tratamiento']) . "</option>";
@@ -262,6 +272,7 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
                             $mas = mysqli_real_escape_string($conexion, $_POST["txtmascota"]);
                             $cli = mysqli_real_escape_string($conexion, $_POST["txtcliente"]);
                             $fec = mysqli_real_escape_string($conexion, $_POST["txtfecha"]);
+                            $peso = mysqli_real_escape_string($conexion, $_POST["txtpeso"]);
                             $pul = mysqli_real_escape_string($conexion, $_POST["txtpulso"]);
                             $car = mysqli_real_escape_string($conexion, $_POST["txtcardio"]);
                             $emp = $_POST["txtempleado"];
@@ -275,7 +286,7 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
                             $fecdes = !empty($_POST["txtfechadesparasitante"]) ? mysqli_real_escape_string($conexion, $_POST["txtfechadesparasitante"]) : null;
                             $serv = $_POST["txtservicio"];
 
-                            if (empty($idPac) || empty($mas) || empty($cli) || empty($fec) || empty($pul) || empty($car) || empty($emp)) {
+                            if (empty($idPac) || empty($mas) || empty($cli) || empty($fec) || empty($pul) || empty($car) || empty($emp) || empty($peso)) {
                                 echo '<script type="text/javascript">
                                 swal({
                                     title: "Mensaje",
@@ -294,6 +305,7 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
                                         id_tratamiento = '$tra', 
                                         instrucciones = '$ins', 
                                         fecha_proxima_cita = " . ($fecpro ? "'$fecpro'" : "NULL") . ", 
+                                        peso = '$peso',
                                         pulso = '$pul', 
                                         cardio = '$car', 
                                         id_vacuna = '$vac', 
@@ -303,9 +315,9 @@ if ($_SESSION["id_rol"] != 1 && $_SESSION["id_rol"] != 2) {
                                         id_empleado = '$emp',
                                         id_nom_servicio = '$serv'
                                         WHERE id_historial_clinico = '$idPac'";
-                                
+
                                 $ejecutar = mysqli_query($conexion, $sql);
-                                
+
                                 if ($ejecutar) {
                                     echo '<script type="text/javascript">
                                         swal({

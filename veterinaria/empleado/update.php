@@ -16,7 +16,6 @@ if ($_SESSION["id_rol"] == 2) {
 ?>
     <!DOCTYPE html>
     <html lang="en">
-
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,7 +23,6 @@ if ($_SESSION["id_rol"] == 2) {
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <title>Advertencia</title>
     </head>
-
     <body>
         <script type="text/javascript">
             swal({
@@ -33,12 +31,10 @@ if ($_SESSION["id_rol"] == 2) {
                 showCancelButton: false,
                 confirmButtonText: 'OK'
             }).then(function() {
-                // Redirigir después de aceptar
                 window.location.href = "../paginas_personal/bienvenido.php";
             });
         </script>
     </body>
-
     </html>
 <?php
     exit();
@@ -46,9 +42,7 @@ if ($_SESSION["id_rol"] == 2) {
 ?>
 
 <?php include("../database/conexion.php") ?>
-
 <?php include("../template_ingreso_admin/cabecera.php") ?>
-
 <?php include("../template_ingreso_admin/menu.php") ?>
 
 <div class="container-fluid container-main">
@@ -168,8 +162,8 @@ if ($_SESSION["id_rol"] == 2) {
                         if ($id_rol != 1) {
                         ?>
                             <div class="col-10 col-sm-8 col-md-7 col-lg-7 text-light">
-                                <label for="" class="form-label" ...>Rol:</label>
-                                <select name="selectrol" class="form-select" ... required>
+                                <label for="" class="form-label" style="font-size: 20px; font-weight: bold; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); color: #fff;">Rol:</label>
+                                <select name="selectrol" class="form-select" style="background-color: rgba(255, 255, 255, 0.8); color: #000;" required>
                                     <option value="">Seleccione...</option>
                                     <?php
                                     $consulta = "SELECT * FROM rol WHERE id_rol != 3";
@@ -197,7 +191,7 @@ if ($_SESSION["id_rol"] == 2) {
                                 </div>
                                 <br>
                                 <div class="col">
-                                    <input type="submit" id="btnActualizar" name="actualizar" value="Actualizar" class="btn btn-primary mb-5 m-2">
+                                    <input type="submit" name="actualizar" value="Actualizar" class="btn btn-primary mb-5 m-2">
                                 </div>
                             </div>
                         </div>
@@ -205,7 +199,7 @@ if ($_SESSION["id_rol"] == 2) {
 
                     <?php
                     if (isset($_POST["actualizar"])) {
-                        // Escapar datos para evitar inyección SQL
+                        // Escapar datos
                         $idPac = mysqli_real_escape_string($conexion, $_POST["txtid"]);
                         $nom = mysqli_real_escape_string($conexion, $_POST["txtnombre"]);
                         $tel = mysqli_real_escape_string($conexion, $_POST["txttelefono"]);
@@ -218,11 +212,12 @@ if ($_SESSION["id_rol"] == 2) {
                         $contrasena = mysqli_real_escape_string($conexion, $_POST["txtcontrasena"]);
                         $rol = mysqli_real_escape_string($conexion, $_POST["selectrol"]);
 
+                        // Validar campos obligatorios
                         if (empty($idPac) || empty($nom) || empty($tel) || empty($ciu) || empty($bar) || empty($dir) || empty($tdoc) || empty($ndoc) || empty($correo) || empty($contrasena) || empty($rol)) {
                             echo '<script type="text/javascript">
                             swal({
                                 title: "Mensaje",
-                                text: "Por favor, complete los campos que modificaste y dejaste vacíos.",
+                                text: "Por favor, complete todos los campos.",
                                 icon: "error",
                                 showCancelButton: false,
                                 confirmButtonText: "OK"
@@ -231,87 +226,78 @@ if ($_SESSION["id_rol"] == 2) {
                             });
                             </script>';
                         } else {
-                            // Verificar si ya existe el correo o documento en OTRO registro
-                            $checkQuery = "SELECT id_empleado AS id, 'empleado' AS tabla FROM empleado WHERE correo = '$correo' AND id_empleado != '$idPac' UNION SELECT id_cliente AS id, 'cliente' AS tabla FROM cliente WHERE n_documento = '$ndoc' OR correo = '$correo'";
-                            $checkResult = mysqli_query($conexion, $checkQuery);
+                            // ========== VALIDACIÓN DE DUPLICADOS (ignorando valores genéricos) ==========
+                            $ignorar_valores = ['N/A', 'NA', 'n/a', 'no tiene', 'sin dato', '0', '', 'ninguno', 'NULL', 'null', '--'];
 
-                            if (mysqli_num_rows($checkResult) > 0) {
-                                $row = mysqli_fetch_assoc($checkResult);
-                                $mensaje = "Los datos ya existen en otro registro";
+                            function esGenerico($valor, $ignorar_valores) {
+                                $valor_limpio = trim($valor);
+                                return in_array($valor_limpio, $ignorar_valores) || empty($valor_limpio);
+                            }
 
-                                // Si es el mismo empleado que estamos actualizando, permitir la actualización
-                                if ($row['tabla'] == 'empleado' && $row['id'] == $idPac) {
-                                    // Este es el mismo registro, permitir actualización
-                                    $sql = "UPDATE empleado SET 
-                nombre = '$nom',
-                telefono = '$tel',
-                ciudad = '$ciu',
-                barrio = '$bar',
-                direccion = '$dir',
-                t_documento = '$tdoc',
-                n_documento = '$ndoc',
-                correo = '$correo',
-                contrasena = '$contrasena',
-                id_rol = '$rol'
-                WHERE id_empleado = '$idPac'";
+                            $check_duplicados = false;
+                            $mensaje_error = '';
 
-                                    $ejecutar = mysqli_query($conexion, $sql) or die(mysqli_error($conexion));
-
-                                    if ($ejecutar) {
-                                        echo '<script type="text/javascript">
-            swal({
-                title: "Mensaje",
-                text: "Registro Actualizado.",
-                icon: "success",
-                showCancelButton: false,
-                confirmButtonText: "OK"
-            }).then(function() {
-                window.open("select.php", "_SELF");
-            });
-            </script>';
-                                    }
-                                } else {
-                                    echo '<script type="text/javascript">
-        swal({
-            title: "Mensaje",
-            text: "Los datos ya existen en otro registro, no se puede actualizar.",
-            icon: "error",
-            showCancelButton: false,
-            confirmButtonText: "OK"
-        }).then(function() {
-            window.open("update.php?actualizar=' . $idPac . '", "_SELF");
-        });
-        </script>';
+                            // Verificar documento (si no es genérico)
+                            if (!esGenerico($ndoc, $ignorar_valores)) {
+                                $checkQuery = "SELECT id_empleado FROM empleado WHERE n_documento = '$ndoc' AND id_empleado != '$idPac'";
+                                $checkResult = mysqli_query($conexion, $checkQuery);
+                                if (mysqli_num_rows($checkResult) > 0) {
+                                    $check_duplicados = true;
+                                    $mensaje_error = "El número de documento ya está registrado en otro empleado.";
                                 }
+                            }
+
+                            // Verificar correo (si no es genérico y no hay duplicado previo)
+                            if (!$check_duplicados && !esGenerico($correo, $ignorar_valores)) {
+                                $checkQuery = "SELECT id_empleado FROM empleado WHERE correo = '$correo' AND id_empleado != '$idPac'";
+                                $checkResult = mysqli_query($conexion, $checkQuery);
+                                if (mysqli_num_rows($checkResult) > 0) {
+                                    $check_duplicados = true;
+                                    $mensaje_error = "El correo ya está registrado en otro empleado.";
+                                }
+                            }
+
+                            if ($check_duplicados) {
+                                echo '<script type="text/javascript">
+                                swal({
+                                    title: "Mensaje",
+                                    text: "' . $mensaje_error . '",
+                                    icon: "error",
+                                    showCancelButton: false,
+                                    confirmButtonText: "OK"
+                                }).then(function() {
+                                    window.open("update.php?actualizar=' . $idPac . '", "_SELF");
+                                });
+                                </script>';
                             } else {
-                                // No hay duplicados, proceder con la actualización
+                                // No hay duplicados relevantes, proceder con la actualización
                                 $sql = "UPDATE empleado SET 
-            nombre = '$nom',
-            telefono = '$tel',
-            ciudad = '$ciu',
-            barrio = '$bar',
-            direccion = '$dir',
-            t_documento = '$tdoc',
-            n_documento = '$ndoc',
-            correo = '$correo',
-            contrasena = '$contrasena',
-            id_rol = '$rol'
-            WHERE id_empleado = '$idPac'";
+                                        nombre = '$nom',
+                                        telefono = '$tel',
+                                        ciudad = '$ciu',
+                                        barrio = '$bar',
+                                        direccion = '$dir',
+                                        t_documento = '$tdoc',
+                                        n_documento = '$ndoc',
+                                        correo = '$correo',
+                                        contrasena = '$contrasena',
+                                        id_rol = '$rol'
+                                        WHERE id_empleado = '$idPac'";
 
                                 $ejecutar = mysqli_query($conexion, $sql) or die(mysqli_error($conexion));
 
                                 if ($ejecutar) {
                                     echo '<script type="text/javascript">
-        swal({
-            title: "Mensaje",
-            text: "Registro Actualizado.",
-            icon: "success",
-            showCancelButton: false,
-            confirmButtonText: "OK"
-        }).then(function() {
-            window.open("select.php", "_SELF");
-        });
-        </script>';
+                                    swal({
+                                        title: "Mensaje",
+                                        text: "Registro actualizado exitosamente.",
+                                        icon: "success",
+                                        showCancelButton: false,
+                                        confirmButtonText: "OK"
+                                    }).then(function() {
+                                        window.open("select.php", "_SELF");
+                                    });
+                                    </script>';
                                 }
                             }
                         }

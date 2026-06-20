@@ -56,9 +56,9 @@ if (count($partes) === 2) {
 
         $mesNumero = $meses[$mesTexto];
 
+        // ✅ CONSULTA CORREGIDA: eliminamos MONTH(f.fecha) AS mes
         $consulta = "
-        SELECT MONTH(f.fecha) AS mes,
-        SUM(df.valor_total - (a.costo_conseguido * df.cantidad)) AS ganancias
+        SELECT SUM(df.valor_total - (a.costo_conseguido * df.cantidad)) AS ganancias
         FROM factura f
         JOIN detalle_factura df ON f.id_factura = df.id_factura
         JOIN articulo a ON df.id_articulo = a.id_articulo

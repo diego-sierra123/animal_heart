@@ -31,7 +31,7 @@ $pdf->Ln(20);
 
 $consul = mysqli_query($conexion, " SELECT h.id_historial_clinico, c.id_cliente, c.nombres AS cliente, m.id_mascota, m.nombre AS mascota, 
 h.fecha_visita, h.diagnostico, t.id_tratamiento, t.medicamentos, t.fecha, t.observaciones , h.instrucciones, h.fecha_proxima_cita, 
-h.pulso, h.cardio, v.id_vacuna, v.nombre AS vacuna, h.fecha_vacuna, d.id_desparasitante, 
+h.pulso, h.cardio, h.peso, v.id_vacuna, v.nombre AS vacuna, h.fecha_vacuna, d.id_desparasitante, 
 d.nombre AS desparasitante, h.fecha_desparasitante, e.id_empleado, e.nombre AS empleado 
 FROM historial_clinico h 
 LEFT JOIN cliente c ON h.id_cliente = c.id_cliente
@@ -62,7 +62,9 @@ while ($ejecutando = mysqli_fetch_array($consul)) {
     $pdf->Cell(47, 10, 'CARDIO:', 1, 0, 'L');
     $pdf->Cell(48, 10, empty($ejecutando['cardio']) ? 'N/A' : utf8_decode($ejecutando['cardio']) .' lpm', 1, 1, 'L');
     $pdf->Cell(47, 10, 'ATENDIDO POR:', 1, 0, 'L');
-    $pdf->Cell(143, 10, empty($ejecutando['empleado']) ? 'N/A' : utf8_decode($ejecutando['empleado']), 1, 1, 'L');
+    $pdf->Cell(48, 10, empty($ejecutando['empleado']) ? 'N/A' : utf8_decode($ejecutando['empleado']), 1, 0, 'L');
+    $pdf->Cell(47, 10, 'PESO:', 1, 0, 'L');
+    $pdf->Cell(48, 10, empty($ejecutando['peso']) ? 'N/A' : $ejecutando['peso'] . ' kg', 1, 1, 'L');
     $pdf->Cell(47, 10, 'DIAGNOSTICO:', 1, 0, 'L');
     $pdf->Cell(143, 10, empty($ejecutando['diagnostico']) ? 'N/A' : utf8_decode($ejecutando['diagnostico']), 1, 1, 'L');
     $pdf->Cell(47, 10, 'INSTRUCCIONES:', 1, 0, 'L');
